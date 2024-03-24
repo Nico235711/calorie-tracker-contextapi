@@ -74,7 +74,7 @@ const Form = () => {
 
       <input
         type="submit"
-        value="Agregar" 
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"} 
         className="bg-gray-800 w-full py-2 text-white uppercase text-lg font-bold cursor-pointer rounded-lg disabled:opacity-10"
         disabled={!isValidActivity()}
       />
