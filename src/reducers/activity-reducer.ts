@@ -3,7 +3,8 @@ import { Activity } from "../types"
 // acciones quee describen que esta pasando en la app
 export type ActivityActions = 
   { type: "save-activity", payload: { newActivity: Activity } } |
-  { type: "set-activeId", payload: { id: Activity["id"] } } 
+  { type: "set-activeId", payload: { id: Activity["id"] } } |
+  { type: "remove-activity", payload: { id: Activity["id"] } } 
 
 export type ActivityState = {
   activities : Activity[],
@@ -44,6 +45,15 @@ export const activityReducer = (
       return {
         ...state,
         activeId: action.payload.id
+      }
+    }
+
+    if (action.type === "remove-activity") {
+
+      // retorno del estado actualizado
+      return {
+        ...state,
+        activities: state.activities.filter(stateActivity => stateActivity.id !== state.activeId)
       }
     }
 
