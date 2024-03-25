@@ -25,6 +25,12 @@ const Form = () => {
     e.preventDefault()
   }
 
+  const isValidActivity = () => {  
+    const { name, calories } = activity
+    // trim() delete spaces at the begining and at the end
+    return name.trim() !== "" && calories > 0
+  }
+
   return (
     <form
       className="rounded-lg shadow space-y-5 bg-white p-10"
@@ -75,8 +81,9 @@ const Form = () => {
 
       <input
         type="submit"
-        value="Agregar" 
-        className="bg-gray-800 w-full py-2 text-white uppercase text-lg font-bold cursor-pointer rounded-lg"
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"} 
+        className="bg-gray-800 w-full py-2 text-white uppercase text-lg font-bold cursor-pointer rounded-lg disabled:opacity-10"
+        disabled={!isValidActivity()}
       />
     </form>
   )
