@@ -53,7 +53,7 @@ export const activityReducer = (
       // retorno del estado actualizado
       return {
         ...state,
-        activities: state.activities.filter(stateActivity => stateActivity.id !== state.activeId)
+        activities: state.activities.filter(stateActivity => stateActivity.id !== action.payload.id)
       }
     }
 
