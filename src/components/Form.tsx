@@ -14,7 +14,7 @@ const Form = () => {
 
     const isNumberField = ["category", "calories"].includes(e.target.id)    
 
-    // convert a specify field in number
+    // convierte un campo especifico a número
     setActivity({
       ...activity,
       [e.target.id] : isNumberField ? +e.target.value : e.target.value
@@ -27,7 +27,7 @@ const Form = () => {
 
   const isValidActivity = () => {  
     const { name, calories } = activity
-    // trim() delete spaces at the begining and at the end
+    // trim() elimina los espacios al principio y al final
     return name.trim() !== "" && calories > 0
   }
 
