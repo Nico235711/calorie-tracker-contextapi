@@ -18,39 +18,43 @@ const ActivityList = ({ activities, dispatch } : ActivityListProps) => {
     <>
       <h2 className="font-bold text-4xl text-center">Comidas y Actividades</h2>
       {
-        activities.map(activity => (
-          <div
-            key={activity.id}
-            className="px-5 py-10 bg-white mt-5 flex justify-between"
-          >
-            <div className="space-y-4 relative">
-              <p className={`absolute -top-8 -left-8 px-5 py-2 text-white uppercase font-bold ${activity.category === 1 ? `bg-lime-500` : `bg-orange-500`}`}>{categoryName(activity.category)}</p>
-              <p className="text-3xl font-bold capitalize">{activity.name}</p>
-              <p className="text-4xl font-black text-lime-500">{activity.calories} Calorías</p>
+        activities.length ? (
+          activities.map(activity => (
+            <div
+              key={activity.id}
+              className="px-5 py-10 bg-white mt-5 flex justify-between"
+            >
+              <div className="space-y-4 relative">
+                <p className={`absolute -top-8 -left-8 px-5 py-2 text-white uppercase font-bold ${activity.category === 1 ? `bg-lime-500` : `bg-orange-500`}`}>{categoryName(activity.category)}</p>
+                <p className="text-3xl font-bold capitalize">{activity.name}</p>
+                <p className="text-4xl font-black text-lime-500">{activity.calories} Calorías</p>
+              </div>
+  
+              <div className="flex gap-5 items-center">
+                <button onClick={() => dispatch({
+                    type: "set-activeId",
+                    payload: { id: activity.id }
+                  })}
+                >
+                  <PencilSquareIcon 
+                    className="h-8 w-8 text-green-500"
+                  />
+                </button>
+                <button onClick={() => dispatch({
+                    type: "remove-activity",
+                    payload: { id: activity.id }
+                  })}
+                >
+                  <TrashIcon 
+                    className="h-8 w-8 text-red-500"
+                  />
+                </button>
+              </div>
             </div>
-
-            <div className="flex gap-5 items-center">
-              <button onClick={() => dispatch({
-                  type: "set-activeId",
-                  payload: { id: activity.id }
-                })}
-              >
-                <PencilSquareIcon 
-                  className="h-8 w-8 text-gray-800"
-                />
-              </button>
-              <button onClick={() => dispatch({
-                  type: "remove-activity",
-                  payload: { id: activity.id }
-                })}
-              >
-                <TrashIcon 
-                  className="h-8 w-8 text-gray-800"
-                />
-              </button>
-            </div>
-          </div>
-        ))
+          ))
+        ) : (
+          <p className="text-2xl text-center mt-5">No hay actividades aún...</p>
+        )
       }
     </>
   )
