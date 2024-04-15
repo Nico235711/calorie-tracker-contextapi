@@ -1,23 +1,20 @@
-import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 
 import { categories } from "../data/categories"
 import { Activity } from "../types"
-import { ActivityActions, ActivityState, } from "../reducers/activity-reducer"
+import { useActivity } from "../hooks/useActivity"
 
-type FormProps = {
-  state: ActivityState
-  dispatch: Dispatch<ActivityActions>
-}
-
-const initialState : Activity = {
+const initialState: Activity = {
   id: uuidv4(),
   category: 1,
   name: "",
   calories: 0
 }
 
-const Form = ({ state, dispatch } : FormProps) => {
+const Form = () => {
+
+  const { state, dispatch } = useActivity()
 
   const [activity, setActivity] = useState<Activity>(initialState)
 
@@ -29,18 +26,18 @@ const Form = ({ state, dispatch } : FormProps) => {
     }
   }, [state.activeId]);
 
-  const handleChange = (e : ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
 
-    const isNumberField = ["category", "calories"].includes(e.target.id)    
+    const isNumberField = ["category", "calories"].includes(e.target.id)
 
     // convierte un campo especifico a número
     setActivity({
       ...activity,
-      [e.target.id] : isNumberField ? +e.target.value : e.target.value
+      [e.target.id]: isNumberField ? +e.target.value : e.target.value
     })
   }
 
-  const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     // disparo mi acción
@@ -57,7 +54,7 @@ const Form = ({ state, dispatch } : FormProps) => {
     })
   }
 
-  const isValidActivity = () => {  
+  const isValidActivity = () => {
     const { name, calories } = activity
     // trim() elimina los espacios al principio y al final
     return name.trim() !== "" && calories > 0
@@ -84,26 +81,26 @@ const Form = ({ state, dispatch } : FormProps) => {
           }
         </select>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-3">
         <label htmlFor="name" className="font-bold">Actividad:</label>
         <input
           type="text"
           name="activity"
-          id="name" 
+          id="name"
           className="border-2 border-slate-200 p-2 rounded-lg"
           placeholder="Ej: manzana, jugo de naranja, ensaldada, bicicleta"
           value={activity.name}
           onChange={handleChange}
         />
       </div>
-      
+
       <div className="grid grid-cols-1 gap-3">
         <label htmlFor="calories" className="font-bold">Calorías:</label>
         <input
           type="text"
           name="calories"
-          id="calories" 
+          id="calories"
           className="border-2 border-slate-200 p-2 rounded-lg"
           placeholder="Ej: 350 o 500 calorías"
           value={activity.calories}
@@ -113,7 +110,7 @@ const Form = ({ state, dispatch } : FormProps) => {
 
       <input
         type="submit"
-        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"} 
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"}
         className="bg-gray-800 w-full py-2 text-white uppercase text-lg font-bold cursor-pointer rounded-lg disabled:opacity-10"
         disabled={!isValidActivity()}
       />
