@@ -19,11 +19,11 @@ function App() {
   return (
     <>
       <header className="bg-lime-600 py-5">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
+        <div className="max-w-4xl mx-auto flex flex-col space-y-4 md:flex-row md:space-y-0 justify-between items-center">
           <h1 className="text-center font-bold text-3xl uppercase text-white">Contador de Calorias</h1>
 
           <button
-            className="bg-gray-800 p-3 text-white rounded-lg text-lg hover:bg-gray-900 transition-all disabled:opacity-40 cursor-pointer uppercase"
+            className="bg-gray-800 p-3 text-white rounded-lg text-lg hover:bg-gray-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer uppercase"
             disabled={!canRestartApp}
             onClick={() => dispatch({ type: "restart-app" })}
           >
